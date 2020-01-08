@@ -35,7 +35,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public boolean delete(Long orderId) {
+    public boolean deleteById(Long orderId) {
         Optional<Order> orderToDelete = get(orderId);
         orderToDelete.ifPresent(this::delete);
         return false;

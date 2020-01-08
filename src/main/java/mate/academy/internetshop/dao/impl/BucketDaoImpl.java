@@ -36,7 +36,7 @@ public class BucketDaoImpl implements BucketDao {
     }
 
     @Override
-    public boolean delete(Long bucketId) {
+    public boolean deleteById(Long bucketId) {
         Optional<Bucket> bucketToDelete = get(bucketId);
         bucketToDelete.ifPresent(this::delete);
         return false;

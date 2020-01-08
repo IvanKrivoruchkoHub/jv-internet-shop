@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
+import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.lib.anotations.Service;
 import mate.academy.internetshop.model.Bucket;
@@ -40,7 +41,7 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public List<Item> getAllItems(Bucket bucket) {
+    public List<Item> getAllItemsFromBucket(Bucket bucket) {
         return bucket.getItems();
     }
 
@@ -60,12 +61,17 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public boolean delete(Long bucketId) {
-        return bucketDao.delete(bucketId);
+    public boolean deleteById(Long bucketId) {
+        return bucketDao.deleteById(bucketId);
     }
 
     @Override
     public boolean delete(Bucket bucket) {
         return bucketDao.delete(bucket);
+    }
+
+    @Override
+    public List<Bucket> getAll() {
+        return Storage.buckets;
     }
 }

@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean delete(Long userId) {
+    public boolean deleteById(Long userId) {
         Optional<User> userToDelete = get(userId);
         userToDelete.ifPresent(this::delete);
         return false;

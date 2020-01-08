@@ -51,7 +51,7 @@ public class Main {
         itemService.update(item2);
         System.out.println(itemService.get(item1.getId()));
         System.out.println(Storage.items);
-        itemService.delete(item2.getId());
+        itemService.deleteById(item2.getId());
         itemService.delete(item1);
         System.out.println(Storage.items);
 
@@ -65,7 +65,7 @@ public class Main {
 
         System.out.println(userService.get(user1.getId()));
         userService.delete(user1);
-        userService.delete(user2.getId());
+        userService.deleteById(user2.getId());
         System.out.println(Storage.users);
 
         System.out.println("bucket test");
@@ -80,13 +80,13 @@ public class Main {
         items.add(item1);
         bucket2.setItems(items);
         bucketService.update(bucket2);
-        System.out.println(bucketService.getAllItems(bucket2));
+        System.out.println(bucketService.getAllItemsFromBucket(bucket2));
         bucketService.addItem(bucket2, item2);
-        System.out.println(bucketService.getAllItems(bucket2));
+        System.out.println(bucketService.getAllItemsFromBucket(bucket2));
         bucketService.deleteItem(bucket2, item2);
-        System.out.println(bucketService.getAllItems(bucket2));
+        System.out.println(bucketService.getAllItemsFromBucket(bucket2));
         bucketService.clear(bucket2);
-        System.out.println(bucketService.getAllItems(bucket2));
+        System.out.println(bucketService.getAllItemsFromBucket(bucket2));
 
         Order order1 = new Order();
         order1.setItems(items);
