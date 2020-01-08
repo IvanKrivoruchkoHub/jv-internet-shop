@@ -53,12 +53,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean delete(Long orderId) {
-        return orderDao.delete(orderId);
+    public boolean deleteById(Long orderId) {
+        return orderDao.deleteById(orderId);
     }
 
     @Override
     public boolean delete(Order order) {
         return orderDao.delete(order);
+    }
+
+    @Override
+    public List<Order> getAll() {
+        return Storage.orders;
     }
 }

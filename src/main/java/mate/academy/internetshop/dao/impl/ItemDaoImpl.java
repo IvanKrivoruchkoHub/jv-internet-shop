@@ -36,7 +36,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean deleteById(Long id) {
         Optional<Item> itemToDelete = get(id);
         itemToDelete.ifPresent(this::delete);
         return false;
