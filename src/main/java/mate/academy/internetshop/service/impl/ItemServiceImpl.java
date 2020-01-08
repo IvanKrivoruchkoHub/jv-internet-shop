@@ -1,7 +1,7 @@
 package mate.academy.internetshop.service.impl;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.anotations.Inject;
@@ -20,8 +20,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Optional<Item> get(Long id) {
-        return itemDao.get(id);
+    public Item get(Long id) {
+        return itemDao.get(id)
+                .orElseThrow(() -> new NoSuchElementException("Can't find item with id " + id));
     }
 
     @Override
