@@ -1,40 +1,21 @@
 package mate.academy.internetshop.dao.impl;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.IdGenerator;
 import mate.academy.internetshop.lib.anotations.Dao;
 import mate.academy.internetshop.model.Bucket;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 @Dao
 public class BucketDaoImpl implements BucketDao {
 
     @Override
     public Bucket create(Bucket bucket) {
-        int pos = getUserBucketPosition(bucket);
         bucket.setBucketId(IdGenerator.getBucketId());
-        if (pos == -1) {
-            Storage.buckets.add(bucket);
-            return bucket;
-        }
-        Storage.buckets.set(pos, bucket);
+        Storage.buckets.add(bucket);
         return bucket;
-    }
-
-    private int getUserBucketPosition(Bucket bucket) {
-        boolean result = false;
-        int pos = 0;
-        for (Bucket tempBucket: Storage.buckets) {
-            if (tempBucket.getUserId().equals(bucket.getUserId())) {
-                result = true;
-                break;
-            }
-            pos++;
-        }
-        return result ? pos : -1;
     }
 
     @Override
@@ -55,15 +36,14 @@ public class BucketDaoImpl implements BucketDao {
     }
 
     @Override
-    public void delete(Long bucketId) {
-        delete(get(bucketId).orElseThrow(()
-                -> new NoSuchElementException("Can`t find bucket with id" + bucketId)));
+    public boolean delete(Long bucketId) {
+        Optional<Bucket> bucketToDelete = get(bucketId);
+        bucketToDelete.ifPresent(this::delete);
+        return false;
     }
 
     @Override
-    public void delete(Bucket bucket) {
-        if (!Storage.buckets.remove(bucket)) {
-            throw new NoSuchElementException("Can`t find bucket with id" + bucket.getBucketId());
-        }
+    public boolean delete(Bucket bucket) {
+        return Storage.buckets.remove(bucket);
     }
 }

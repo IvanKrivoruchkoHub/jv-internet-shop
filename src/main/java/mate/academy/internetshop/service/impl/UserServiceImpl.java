@@ -1,12 +1,11 @@
 package mate.academy.internetshop.service.impl;
 
+import java.util.Optional;
 import mate.academy.internetshop.dao.UserDao;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.lib.anotations.Service;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
-
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,12 +29,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long userId) {
-        userDao.delete(userId);
+    public boolean delete(Long userId) {
+        return userDao.delete(userId);
     }
 
     @Override
-    public void delete(User user) {
-        userDao.delete(user);
+    public boolean delete(User user) {
+        return userDao.delete(user);
     }
 }

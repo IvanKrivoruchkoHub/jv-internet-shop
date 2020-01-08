@@ -1,5 +1,8 @@
 package mate.academy.internetshop.service.impl;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.lib.anotations.Inject;
@@ -7,9 +10,6 @@ import mate.academy.internetshop.lib.anotations.Service;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.BucketService;
-
-import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class BucketServiceImpl implements BucketService {
@@ -21,13 +21,15 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public void addItem(Bucket bucket, Item item) {
-        Bucket tempBucket = bucketDao.get(bucket.getBucketId()).orElseThrow(NoSuchElementException::new);
+        Bucket tempBucket = bucketDao.get(bucket.getBucketId())
+                .orElseThrow(NoSuchElementException::new);
         tempBucket.getItems().add(item);
     }
 
     @Override
     public void deleteItem(Bucket bucket, Item item) {
-        Bucket tempBucket = bucketDao.get(bucket.getBucketId()).orElseThrow(NoSuchElementException::new);
+        Bucket tempBucket = bucketDao.get(bucket.getBucketId())
+                .orElseThrow(NoSuchElementException::new);
         tempBucket.getItems().remove(item);
         bucketDao.update(tempBucket);
     }
@@ -48,8 +50,8 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public Bucket get(Long bucketId) {
-        return bucketDao.get(bucketId).orElseThrow(NoSuchElementException::new);
+    public Optional<Bucket> get(Long bucketId) {
+        return bucketDao.get(bucketId);
     }
 
     @Override
@@ -58,12 +60,12 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public void delete(Long bucketId) {
-        bucketDao.delete(bucketId);
+    public boolean delete(Long bucketId) {
+        return bucketDao.delete(bucketId);
     }
 
     @Override
-    public void delete(Bucket bucket) {
-        bucketDao.delete(bucket);
+    public boolean delete(Bucket bucket) {
+        return bucketDao.delete(bucket);
     }
 }

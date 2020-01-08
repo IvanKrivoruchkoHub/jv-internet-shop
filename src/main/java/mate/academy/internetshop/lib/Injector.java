@@ -1,9 +1,5 @@
 package mate.academy.internetshop.lib;
 
-import mate.academy.internetshop.lib.anotations.Dao;
-import mate.academy.internetshop.lib.anotations.Inject;
-import mate.academy.internetshop.lib.anotations.Service;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -11,6 +7,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import mate.academy.internetshop.lib.anotations.Dao;
+import mate.academy.internetshop.lib.anotations.Inject;
+import mate.academy.internetshop.lib.anotations.Service;
 
 /**
  * Students will implement this on Lesson 16 (Servlet)
@@ -43,7 +42,8 @@ public class Injector {
     }
 
     /**
-     * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
+     * Scans all classes accessible from the context class
+     * loader which belong to the given package and subpackages.
      *
      * @param packageName The base package
      * @return The classes

@@ -1,13 +1,12 @@
 package mate.academy.internetshop.dao.impl;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.IdGenerator;
 import mate.academy.internetshop.lib.anotations.Dao;
 import mate.academy.internetshop.model.Item;
-
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Dao
 public class ItemDaoImpl implements ItemDao {
@@ -37,16 +36,15 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void delete(Long id) {
-        delete(get(id).orElseThrow(()
-                -> new NoSuchElementException("Can`t find bucket with id" + id)));
+    public boolean delete(Long id) {
+        Optional<Item> itemToDelete = get(id);
+        itemToDelete.ifPresent(this::delete);
+        return false;
     }
 
     @Override
-    public void delete(Item item) {
-        if (!Storage.items.remove(item)) {
-            throw new NoSuchElementException("Can`t find item with id" + item.getId());
-        }
+    public boolean delete(Item item) {
+        return Storage.items.remove(item);
     }
 
 }

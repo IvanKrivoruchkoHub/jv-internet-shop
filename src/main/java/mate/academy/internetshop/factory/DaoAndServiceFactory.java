@@ -29,14 +29,14 @@ public class DaoAndServiceFactory {
     private static UserService userServiceInstance;
 
     public static BucketDao getBucketDaoInstance() {
-        if (bucketDaoInstance == null){
+        if (bucketDaoInstance == null) {
             bucketDaoInstance = new BucketDaoImpl();
         }
         return bucketDaoInstance;
     }
 
     public static ItemDao getItemDaoInstance() {
-        if (itemDaoInstance == null){
+        if (itemDaoInstance == null) {
             itemDaoInstance = new ItemDaoImpl();
         }
         return itemDaoInstance;
@@ -50,7 +50,7 @@ public class DaoAndServiceFactory {
     }
 
     public static UserDao getUserDaoInstance() {
-        if (userDaoInstance == null){
+        if (userDaoInstance == null) {
             userDaoInstance = new UserDaoImpl();
         }
         return userDaoInstance;

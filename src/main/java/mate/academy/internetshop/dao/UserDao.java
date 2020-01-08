@@ -1,8 +1,7 @@
 package mate.academy.internetshop.dao;
 
-import mate.academy.internetshop.model.User;
-
 import java.util.Optional;
+import mate.academy.internetshop.model.User;
 
 public interface UserDao {
     User create(User user);
@@ -11,7 +10,7 @@ public interface UserDao {
 
     User update(User user);
 
-    void delete(Long userId);
+    boolean delete(Long userId);
 
-    void delete(User user);
+    boolean delete(User user);
 }

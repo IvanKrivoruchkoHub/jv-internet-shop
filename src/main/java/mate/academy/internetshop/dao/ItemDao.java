@@ -1,8 +1,7 @@
 package mate.academy.internetshop.dao;
 
-import mate.academy.internetshop.model.Item;
-
 import java.util.Optional;
+import mate.academy.internetshop.model.Item;
 
 public interface ItemDao {
     Item create(Item item);
@@ -11,8 +10,8 @@ public interface ItemDao {
 
     Item update(Item item);
 
-    void delete(Long id);
+    boolean delete(Long id);
 
-    void delete(Item item);
+    boolean delete(Item item);
 
 }

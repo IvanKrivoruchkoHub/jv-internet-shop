@@ -1,5 +1,7 @@
 package mate.academy.internetshop;
 
+import java.util.ArrayList;
+import java.util.List;
 import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.Injector;
 import mate.academy.internetshop.lib.anotations.Inject;
@@ -11,9 +13,6 @@ import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
 import mate.academy.internetshop.service.OrderService;
 import mate.academy.internetshop.service.UserService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     @Inject
@@ -35,6 +34,7 @@ public class Main {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
         Item item1 = new Item();
         item1.setName("Keyboard");
@@ -51,8 +51,8 @@ public class Main {
         itemService.update(item2);
         System.out.println(itemService.get(item1.getId()));
         System.out.println(Storage.items);
-        //itemService.delete(item2.getId());
-        //itemService.delete(item1);
+        itemService.delete(item2.getId());
+        itemService.delete(item1);
         System.out.println(Storage.items);
 
         User user1 = new User();
@@ -64,17 +64,16 @@ public class Main {
         System.out.println(Storage.users);
 
         System.out.println(userService.get(user1.getId()));
-        //userService.delete(user1);
-        //userService.delete(user2.getId());
+        userService.delete(user1);
+        userService.delete(user2.getId());
         System.out.println(Storage.users);
 
         System.out.println("bucket test");
         Bucket bucket1 = new Bucket();
         Bucket bucket2 = new Bucket();
         bucket1.setUserId(user1.getId());
-        bucketService.create(bucket1);
-        System.out.println(Storage.buckets);
         bucket2.setUserId(user2.getId());
+        bucketService.create(bucket1);
         bucketService.create(bucket2);
         System.out.println(Storage.buckets);
         List<Item> items = new ArrayList<>();
@@ -98,7 +97,7 @@ public class Main {
         order1.setItems(items);
         orderService.update(order1);
         System.out.println(orderService.get(order1.getOrderId()));
-        //orderService.delete(order1);
+        orderService.delete(order1);
         orderService.completeOrder(items, user1);
         System.out.println(orderService.getUserOrders(user1));
     }

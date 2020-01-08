@@ -1,5 +1,8 @@
 package mate.academy.internetshop.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.internetshop.dao.OrderDao;
 import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.anotations.Inject;
@@ -8,10 +11,6 @@ import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.OrderService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -54,12 +53,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(Long orderId) {
-        orderDao.delete(orderId);
+    public boolean delete(Long orderId) {
+        return orderDao.delete(orderId);
     }
 
     @Override
-    public void delete(Order order) {
-        orderDao.delete(order);
+    public boolean delete(Order order) {
+        return orderDao.delete(order);
     }
 }
