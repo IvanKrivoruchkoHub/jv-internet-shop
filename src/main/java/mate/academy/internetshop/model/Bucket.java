@@ -31,4 +31,12 @@ public class Bucket {
         this.items = items;
     }
 
+    @Override
+    public String toString() {
+        return "Bucket{"
+                + "userId=" + userId
+                + ", bucketId=" + bucketId
+                + ", items=" + items
+                + '}';
+    }
 }
