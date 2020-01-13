@@ -66,6 +66,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAll() {
-        return Storage.orders;
+        return orderDao.getAll();
     }
 }

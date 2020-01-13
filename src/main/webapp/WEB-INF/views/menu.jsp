@@ -20,7 +20,7 @@
     <button type="submit">Show all users</button>
 </form>
 <br>
-<form action="${pageContext.request.contextPath}/servlet/allOrders">
+<form action="${pageContext.request.contextPath}/servlet/allUserOrders">
     <button type="submit">show all Orders</button>
 </form>
 <br>

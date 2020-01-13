@@ -43,6 +43,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        return Storage.users;
+        return userDao.getAll();
     }
 }
