@@ -46,4 +46,11 @@ public class BucketDaoImpl implements BucketDao {
     public boolean delete(Bucket bucket) {
         return Storage.buckets.remove(bucket);
     }
+
+    @Override
+    public Optional<Bucket> getByUserId(Long userId) {
+        return Storage.buckets.stream()
+                .filter(b -> b.getUserId().equals(userId))
+                .findFirst();
+    }
 }

@@ -45,6 +45,13 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
+    public Bucket getByUserId(Long userId) {
+        return bucketDao.getByUserId(userId)
+                .orElseThrow(() -> new NoSuchElementException("Can't find bucket with user id "
+                                                + userId));
+    }
+
+    @Override
     public Bucket create(Bucket bucket) {
         return bucketDao.create(bucket);
     }

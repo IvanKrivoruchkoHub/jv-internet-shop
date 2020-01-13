@@ -8,11 +8,14 @@
     <title>All Users</title>
 </head>
 <body>
-${users}
-<table>
+All users:
+<table border="3">
     <tr>
         <th>ID</th>
+        <th>Login</th>
         <th>Name</th>
+        <th>Surname</th>
+        <th>Delete</th>
     </tr>
     <c:forEach var="user" items="${users}">
         <tr>
@@ -20,10 +23,22 @@ ${users}
                 <c:out value="${user.id}" />
             </td>
             <td>
+                <c:out value="${user.login}" />
+            </td>
+            <td>
                 <c:out value="${user.name}" />
+            </td>
+            <td>
+                <c:out value="${user.surname}" />
+            </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/servlet/deleteUser?user_id=${user.id}">DELETE</a>
             </td>
         </tr>
     </c:forEach>
 </table>
+<form action="${pageContext.request.contextPath}/servlet/menu">
+    <button type="submit">MENU</button>
+</form>
 </body>
 </html>
