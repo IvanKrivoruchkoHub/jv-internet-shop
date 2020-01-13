@@ -107,12 +107,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>allOrders</servlet-name>
-        <servlet-class>mate.academy.internetshop.controller.GetAllOrdersController</servlet-class>
+        <servlet-name>allUserOrders</servlet-name>
+        <servlet-class>mate.academy.internetshop.controller.GetAllUserOrdersController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>allOrders</servlet-name>
-        <url-pattern>/servlet/allOrders</url-pattern>
+        <servlet-name>allUserOrders</servlet-name>
+        <url-pattern>/servlet/allUserOrders</url-pattern>
     </servlet-mapping>
 
     <servlet>

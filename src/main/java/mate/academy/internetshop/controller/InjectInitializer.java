@@ -1,9 +1,8 @@
 package mate.academy.internetshop.controller;
 
-import mate.academy.internetshop.lib.Injector;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import mate.academy.internetshop.lib.Injector;
 
 public class InjectInitializer implements ServletContextListener {
     @Override

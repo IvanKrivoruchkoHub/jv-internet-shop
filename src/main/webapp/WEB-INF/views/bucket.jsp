@@ -30,10 +30,10 @@ bucket id : ${bucket.bucketId}
     </c:forEach>
 </table>
 <br>
-
+<form action="${pageContext.request.contextPath}/servlet/completeOrder">
+    <button type="submit">CHECKOUT</button>
+</form>
 <form action="${pageContext.request.contextPath}/servlet/menu">
     <button type="submit">MENU</button>
 </form>
-<a href="${pageContext.request.contextPath}/servlet/completeOrder?bucket_id=${bucket.bucketId}">Checkout</a>
-</body>
 </html>
