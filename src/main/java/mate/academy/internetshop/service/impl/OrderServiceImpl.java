@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import mate.academy.internetshop.dao.OrderDao;
-import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.lib.anotations.Service;
 import mate.academy.internetshop.model.Item;
@@ -29,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getUserOrders(User user) {
         List<Order> resultList = new ArrayList<>();
-        for (Order tempOrder: Storage.orders) {
+        for (Order tempOrder: getAll()) {
             if (tempOrder.getUserId().equals(user.getId())) {
                 resultList.add(tempOrder);
             }
