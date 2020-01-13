@@ -9,7 +9,7 @@
 </head>
 <body>
 All items:
-<table border="3">
+<table border="1">
     <tr>
         <th>ID</th>
         <th>Name</th>

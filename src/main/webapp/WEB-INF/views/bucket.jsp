@@ -9,7 +9,7 @@
 </head>
 <body>
 bucket id : ${bucket.bucketId}
-<table border="3">
+<table border="1">
     <tr>
         <th>Name</th>
         <th>Price</th>

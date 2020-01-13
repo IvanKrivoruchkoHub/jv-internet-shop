@@ -21,7 +21,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order completeOrder(List<Item> items, User user) {
         Order order = new Order();
-        order.setItems(items);
+        order.setItems(new ArrayList<>(items));
         order.setUserId(user.getId());
         return orderDao.create(order);
     }

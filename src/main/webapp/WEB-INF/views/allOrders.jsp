@@ -7,7 +7,7 @@
     <title>All Orders</title>
 </head>
 <body>
-<table border="3">
+<table border="1">
     <tr>
         <th>Order ID</th>
         <th>Items</th>
@@ -19,7 +19,22 @@
                 <c:out value="${order.orderId}" />
             </td>
             <td>
-                <c:out value="${order.items}" />
+                <table border="1">
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Price</th>
+                    </tr>
+                    <c:forEach var="item" items="${order.items}">
+                        <tr>
+                            <td>
+                                <c:out value="${item.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${item.price}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </td>
             <td>
                 <a href="${pageContext.request.contextPath}/servlet/deleteOrder?order_id=${order.orderId}">DELETE</a>

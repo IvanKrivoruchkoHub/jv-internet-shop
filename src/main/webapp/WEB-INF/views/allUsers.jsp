@@ -9,7 +9,7 @@
 </head>
 <body>
 All users:
-<table border="3">
+<table border="1">
     <tr>
         <th>ID</th>
         <th>Login</th>
