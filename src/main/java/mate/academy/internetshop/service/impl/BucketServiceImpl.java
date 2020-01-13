@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
-import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.lib.anotations.Service;
 import mate.academy.internetshop.model.Bucket;
@@ -45,6 +44,13 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
+    public Bucket getByUserId(Long userId) {
+        return bucketDao.getByUserId(userId)
+                .orElseThrow(() -> new NoSuchElementException("Can't find bucket with user id "
+                                                + userId));
+    }
+
+    @Override
     public Bucket create(Bucket bucket) {
         return bucketDao.create(bucket);
     }
@@ -73,6 +79,6 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public List<Bucket> getAll() {
-        return Storage.buckets;
+        return bucketDao.getAll();
     }
 }

@@ -5,11 +5,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mate.academy.internetshop.lib.anotations.Inject;
+import mate.academy.internetshop.service.OrderService;
 
-public class IndexController extends HttpServlet {
+public class DeleteOrderController extends HttpServlet {
+    @Inject
+    private static OrderService orderService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
+        orderService.deleteById(Long.valueOf(req.getParameter("order_id")));
+        resp.sendRedirect(req.getContextPath() + "/servlet/allUserOrders");
     }
 }

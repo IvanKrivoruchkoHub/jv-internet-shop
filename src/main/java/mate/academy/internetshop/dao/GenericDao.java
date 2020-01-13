@@ -1,5 +1,6 @@
 package mate.academy.internetshop.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GenericDao<T, I> {
@@ -12,4 +13,6 @@ public interface GenericDao<T, I> {
     boolean deleteById(I entityId);
 
     boolean delete(T entity);
+
+    List<T> getAll();
 }
