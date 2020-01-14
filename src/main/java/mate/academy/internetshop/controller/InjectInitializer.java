@@ -7,15 +7,16 @@ import org.apache.log4j.Logger;
 
 public class InjectInitializer implements ServletContextListener {
 
-    static final Logger logger = Logger.getLogger(InjectInitializer.class);
+    private static final Logger LOGGER = Logger.getLogger(InjectInitializer.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            logger.info("Start injectionDependency");
+            LOGGER.info("Start injectionDependency");
             Injector.injectDependency();
         } catch (IllegalAccessException e) {
-            logger.error(e);
+            LOGGER.error("Can't initialized all dependencies ", e);
+            throw new RuntimeException(e);
         }
     }
 

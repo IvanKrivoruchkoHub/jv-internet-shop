@@ -11,21 +11,16 @@ import java.util.List;
 import mate.academy.internetshop.lib.anotations.Dao;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.lib.anotations.Service;
-import org.apache.log4j.Logger;
 
-/**
- * Students will implement this on Lesson 16 (Servlet)
- */
 public class Injector {
     private static final String PROJECT_MAIN_PACKAGE = "mate.academy.internetshop";
     private static List<Class> classes = new ArrayList<>();
-    static final Logger logger = Logger.getLogger(Injector.class);
 
     static {
         try {
             classes.addAll(getClasses(PROJECT_MAIN_PACKAGE));
         } catch (ClassNotFoundException | IOException e) {
-            logger.error(e);
+            throw new RuntimeException(e);
         }
     }
 
