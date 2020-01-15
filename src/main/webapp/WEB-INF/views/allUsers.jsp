@@ -37,7 +37,7 @@ All users:
         </tr>
     </c:forEach>
 </table>
-<form action="${pageContext.request.contextPath}/servlet/menu">
+<form action="${pageContext.request.contextPath}/menu">
     <button type="submit">MENU</button>
 </form>
 </body>

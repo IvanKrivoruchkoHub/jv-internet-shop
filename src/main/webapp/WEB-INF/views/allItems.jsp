@@ -41,7 +41,7 @@ All items:
 <form action="${pageContext.request.contextPath}/servlet/bucket">
     <button type="submit">BUCKET</button>
 </form>
-<form action="${pageContext.request.contextPath}/servlet/menu">
+<form action="${pageContext.request.contextPath}/menu">
     <button type="submit">MENU</button>
 </form>
 </body>

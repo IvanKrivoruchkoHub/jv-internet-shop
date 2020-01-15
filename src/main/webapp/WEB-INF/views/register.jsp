@@ -4,12 +4,12 @@
     <title>Registration</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/servlet/registration" method="post">
+<form action="${pageContext.request.contextPath}/registration" method="post">
     <div class="container">
         <p>Please fill in this form to create an account.</p>
         <hr>
 
-        <label for="login"><b>Email</b></label>
+        <label for="login"><b>Login</b></label>
         <input type="text" placeholder="Enter login" name="login" required>
 
         <label for="name"><b>Name</b></label>
@@ -18,11 +18,11 @@
         <label for="surname"><b>Surname</b></label>
         <input type="text" placeholder="Enter Surname" name="surname" required>
 
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
 
         <label for="psw-repeat"><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+        <input type="password" placeholder="Repeat Password" name="password-repeat" required>
         <hr>
 
         <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
@@ -30,9 +30,9 @@
     </div>
 </form>
 <div class="container signin">
-    <p>Already have an account? <a href="#">Sign in</a>.</p>
+    <p>Already have an account? <a href="${pageContext.request.contextPath}/login">Sign in</a>.</p>
 </div>
-<form action="${pageContext.request.contextPath}/servlet/menu">
+<form action="${pageContext.request.contextPath}/menu">
     <button type="submit">MENU</button>
 </form>
 </body>
