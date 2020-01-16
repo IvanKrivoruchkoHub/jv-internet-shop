@@ -33,7 +33,7 @@ bucket id : ${bucket.bucketId}
 <form action="${pageContext.request.contextPath}/servlet/completeOrder">
     <button type="submit">CHECKOUT</button>
 </form>
-<form action="${pageContext.request.contextPath}/servlet/menu">
+<form action="${pageContext.request.contextPath}/menu">
     <button type="submit">MENU</button>
 </form>
 </html>

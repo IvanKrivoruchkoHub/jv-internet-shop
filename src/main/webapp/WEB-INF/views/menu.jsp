@@ -4,7 +4,11 @@
     <title>MENU</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/servlet/registration">
+<form action="${pageContext.request.contextPath}/login">
+    <button type="submit">Login</button>
+</form>
+<br>
+<form action="${pageContext.request.contextPath}/registration">
     <button type="submit">Registration</button>
 </form>
 <br>

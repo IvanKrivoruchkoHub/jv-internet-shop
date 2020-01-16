@@ -13,7 +13,7 @@ ADDED ITEM:
 <form action="${pageContext.request.contextPath}/servlet/addItem">
     <button type="submit">Add item</button>
 </form>
-<form action="${pageContext.request.contextPath}/servlet/menu">
+<form action="${pageContext.request.contextPath}/menu">
     <button type="submit">menu</button>
 </form>
 </body>
