@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.model.Bucket;
+import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.UserService;
 
@@ -21,8 +22,16 @@ public class DeleteUserController extends HttpServlet {
             throws ServletException, IOException {
         Long userId = Long.valueOf(req.getParameter("user_id"));
         userService.deleteById(userId);
-        Bucket bucket = bucketService.getByUserId(userId);
-        bucketService.delete(bucket);
+        if (!checkIfAdmin(userId)) {
+            Bucket bucket = bucketService.getByUserId(userId);
+            bucketService.delete(bucket);
+        }
         resp.sendRedirect(req.getContextPath() + "/servlet/allUsers");
+    }
+
+    private boolean checkIfAdmin(Long userId) {
+        return userService.get(userId).getRoles()
+                .stream()
+                .anyMatch(r -> r.getRoleName().equals(Role.RoleName.ADMIN));
     }
 }
