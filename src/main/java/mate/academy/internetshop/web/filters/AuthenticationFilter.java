@@ -1,7 +1,7 @@
 package mate.academy.internetshop.web.filters;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -9,12 +9,10 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mate.academy.internetshop.lib.anotations.Inject;
-import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
 
 public class AuthenticationFilter implements Filter {
@@ -31,20 +29,17 @@ public class AuthenticationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        if (req.getCookies() == null) {
+
+        if (req.getSession().getAttribute("userId") == null) {
             processUnAuthenticated(req, resp);
             return;
         }
-        for (Cookie cookie : req.getCookies()) {
-            if (cookie.getName().equals("MATE")) {
-                Optional<User> user = userService.findByToken(cookie.getValue());
-                if (user.isPresent()) {
-                    chain.doFilter(request, response);
-                    return;
-                }
-            }
+        try {
+            userService.get((Long) req.getSession().getAttribute("userId"));
+            chain.doFilter(request, response);
+        } catch (NoSuchElementException e) {
+            processUnAuthenticated(req, resp);
         }
-        processUnAuthenticated(req, resp);
     }
 
     private void processUnAuthenticated(HttpServletRequest req, HttpServletResponse resp)

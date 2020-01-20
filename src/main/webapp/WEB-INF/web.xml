@@ -9,7 +9,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
-        <url-pattern>/index</url-pattern>
+        <url-pattern>/servlet/index</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -141,6 +141,15 @@
         <servlet-name>login</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>mate.academy.internetshop.controller.LogOutController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
     
     <filter>
         <filter-name>authentication-filter</filter-name>
@@ -150,4 +159,13 @@
         <filter-name>authentication-filter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>autorization-filter</filter-name>
+        <filter-class>mate.academy.internetshop.web.filters.AutorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>autorization-filter</filter-name>
+        <url-pattern>/servlet/*</url-pattern>
+    </filter-mapping>
+
 </web-app>
