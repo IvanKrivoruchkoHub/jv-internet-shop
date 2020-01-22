@@ -1,5 +1,9 @@
 package mate.academy.internetshop.factory;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.dao.OrderDao;
@@ -8,6 +12,7 @@ import mate.academy.internetshop.dao.impl.BucketDaoImpl;
 import mate.academy.internetshop.dao.impl.ItemDaoImpl;
 import mate.academy.internetshop.dao.impl.OrderDaoImpl;
 import mate.academy.internetshop.dao.impl.UserDaoImpl;
+import mate.academy.internetshop.dao.jdbc.ItemDaoJdbcImpl;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
 import mate.academy.internetshop.service.OrderService;
@@ -16,6 +21,7 @@ import mate.academy.internetshop.service.impl.BucketServiceImpl;
 import mate.academy.internetshop.service.impl.ItemServiceImpl;
 import mate.academy.internetshop.service.impl.OrderServiceImpl;
 import mate.academy.internetshop.service.impl.UserServiceImpl;
+import org.apache.log4j.Logger;
 
 public class DaoAndServiceFactory {
     private static BucketDao bucketDaoInstance;
@@ -28,6 +34,19 @@ public class DaoAndServiceFactory {
     private static OrderService orderServiceInstance;
     private static UserService userServiceInstance;
 
+    private static Connection connection;
+    private static Logger logger = Logger.getLogger(DaoAndServiceFactory.class);
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/internetShop_db?" +
+                    "user=ivan&password=1234&serverTimezone=UTC");
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.warn("Can't establish connection to our DB", e);
+        }
+
+    }
+
     public static BucketDao getBucketDaoInstance() {
         if (bucketDaoInstance == null) {
             bucketDaoInstance = new BucketDaoImpl();
@@ -37,7 +56,7 @@ public class DaoAndServiceFactory {
 
     public static ItemDao getItemDaoInstance() {
         if (itemDaoInstance == null) {
-            itemDaoInstance = new ItemDaoImpl();
+            itemDaoInstance = new ItemDaoJdbcImpl(connection);
         }
         return itemDaoInstance;
     }
