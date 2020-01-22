@@ -5,7 +5,6 @@ import javax.servlet.ServletContextListener;
 import mate.academy.internetshop.lib.Injector;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.model.Bucket;
-import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
@@ -54,16 +53,6 @@ public class InjectInitializer implements ServletContextListener {
         Bucket bucket = new Bucket();
         bucket.setUserId(user.getId());
         bucketService.create(bucket);
-
-        Item item = new Item();
-        item.setName("Keyboard");
-        item.setPrice(500.00);
-        itemService.create(item);
-
-        Item item2 = new Item();
-        item2.setName("Monitor");
-        item2.setPrice(5000.00);
-        itemService.create(item2);
     }
 
     @Override
