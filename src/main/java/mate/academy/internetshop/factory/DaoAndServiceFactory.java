@@ -9,7 +9,6 @@ import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.dao.OrderDao;
 import mate.academy.internetshop.dao.UserDao;
 import mate.academy.internetshop.dao.impl.BucketDaoImpl;
-import mate.academy.internetshop.dao.impl.ItemDaoImpl;
 import mate.academy.internetshop.dao.impl.OrderDaoImpl;
 import mate.academy.internetshop.dao.impl.UserDaoImpl;
 import mate.academy.internetshop.dao.jdbc.ItemDaoJdbcImpl;
@@ -36,15 +35,15 @@ public class DaoAndServiceFactory {
 
     private static Connection connection;
     private static Logger logger = Logger.getLogger(DaoAndServiceFactory.class);
+
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/internetShop_db?" +
-                    "user=ivan&password=1234&serverTimezone=UTC");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/internetShop_db?"
+                    + "user=ivan&password=1234&serverTimezone=UTC");
         } catch (ClassNotFoundException | SQLException e) {
             logger.warn("Can't establish connection to our DB", e);
         }
-
     }
 
     public static BucketDao getBucketDaoInstance() {

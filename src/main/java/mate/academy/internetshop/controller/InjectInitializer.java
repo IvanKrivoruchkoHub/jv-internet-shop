@@ -5,7 +5,6 @@ import javax.servlet.ServletContextListener;
 import mate.academy.internetshop.lib.Injector;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.model.Bucket;
-import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;

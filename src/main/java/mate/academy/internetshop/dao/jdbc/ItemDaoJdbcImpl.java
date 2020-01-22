@@ -25,8 +25,9 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
 
     @Override
     public Item create(Item entity) {
-        String query = String.format(Locale.ROOT,"insert into %s.items (name, price) values ('%s', %f)"
-                , DB_NAME, entity.getName(), entity.getPrice());
+        String query = String.format(Locale.ROOT,
+                "insert into %s.items (name, price) values ('%s', %f)",
+                DB_NAME, entity.getName(), entity.getPrice());
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -37,28 +38,13 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        /*String query = "insert into ?.items (name, price) values ('?', ?)";
-        try(PreparedStatement preparedStatement
-                    = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, DB_NAME);
-            preparedStatement.setString(2, entity.getName());
-            preparedStatement.setDouble(3, entity.getPrice());
-            preparedStatement.executeUpdate();
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    entity.setId(generatedKeys.getLong(1));
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }*/
         return entity;
     }
 
     @Override
     public Optional<Item> get(Long entityId) {
         String query = String.format("select * from %s.items where item_id=%d",  DB_NAME, entityId);
-        try(Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
                 Item item = getItemFromResultSet(resultSet);
@@ -72,9 +58,10 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
 
     @Override
     public Item update(Item entity) {
-        String query = String.format(Locale.ROOT,"UPDATE %s.items SET name = '%s', price = %f WHERE item_id = %d"
-                , DB_NAME, entity.getName(), entity.getPrice(), entity.getId());
-        try(Statement statement = connection.createStatement()) {
+        String query = String.format(Locale.ROOT,
+                "UPDATE %s.items SET name = '%s', price = %f WHERE item_id = %d",
+                DB_NAME, entity.getName(), entity.getPrice(), entity.getId());
+        try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -84,9 +71,9 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
 
     @Override
     public boolean deleteById(Long entityId) {
-        String query = String.format("delete from %s.items\n" +
-                "where item_id = %d", DB_NAME, entityId);
-        try(Statement statement = connection.createStatement()) {
+        String query = String.format("delete from %s.items\n"
+                + "where item_id = %d", DB_NAME, entityId);
+        try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
             return true;
         } catch (SQLException e) {
@@ -103,7 +90,7 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
     public List<Item> getAll() {
         List<Item> itemList = new ArrayList<>();
         String query = String.format("select * from %s.items",  DB_NAME);
-        try(Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 Item item = getItemFromResultSet(resultSet);
