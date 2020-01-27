@@ -7,6 +7,13 @@ public class Order {
     private Long userId;
     private List<Item> items;
 
+    public Order() {
+    }
+
+    public Order(List<Item> items) {
+        this.items = items;
+    }
+
     public Long getOrderId() {
         return orderId;
     }

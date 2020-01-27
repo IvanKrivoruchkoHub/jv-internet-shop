@@ -12,12 +12,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exceptions.DataProcessingExeption;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class AuthenticationFilter implements Filter {
     @Inject
     private static UserService userService;
+
+    private static Logger logger = Logger.getLogger(AuthenticationFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -39,7 +43,12 @@ public class AuthenticationFilter implements Filter {
             chain.doFilter(request, response);
         } catch (NoSuchElementException e) {
             processUnAuthenticated(req, resp);
+        } catch (DataProcessingExeption dataProcessingExeption) {
+            logger.error(dataProcessingExeption);
+            req.setAttribute("errorMsg", dataProcessingExeption.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
+
     }
 
     private void processUnAuthenticated(HttpServletRequest req, HttpServletResponse resp)

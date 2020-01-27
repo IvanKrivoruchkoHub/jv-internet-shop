@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import mate.academy.internetshop.dao.OrderDao;
+import mate.academy.internetshop.exceptions.DataProcessingExeption;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.lib.anotations.Service;
 import mate.academy.internetshop.model.Item;
@@ -18,7 +19,7 @@ public class OrderServiceImpl implements OrderService {
     private static OrderDao orderDao;
 
     @Override
-    public Order completeOrder(List<Item> items, User user) {
+    public Order completeOrder(List<Item> items, User user) throws DataProcessingExeption {
         Order order = new Order();
         order.setItems(new ArrayList<>(items));
         order.setUserId(user.getId());
@@ -26,45 +27,39 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getUserOrders(User user) {
-        List<Order> resultList = new ArrayList<>();
-        for (Order tempOrder: getAll()) {
-            if (tempOrder.getUserId().equals(user.getId())) {
-                resultList.add(tempOrder);
-            }
-        }
-        return resultList;
+    public List<Order> getUserOrders(User user) throws DataProcessingExeption {
+        return orderDao.getUserOrders(user);
     }
 
     @Override
-    public Order create(Order order) {
+    public Order create(Order order) throws DataProcessingExeption {
         return orderDao.create(order);
     }
 
     @Override
-    public Order get(Long orderId) {
+    public Order get(Long orderId) throws DataProcessingExeption {
         return orderDao.get(orderId)
                 .orElseThrow(() -> new NoSuchElementException("Can't find order with id "
                         + orderId));
     }
 
     @Override
-    public Order update(Order order) {
+    public Order update(Order order) throws DataProcessingExeption {
         return orderDao.update(order);
     }
 
     @Override
-    public boolean deleteById(Long orderId) {
+    public boolean deleteById(Long orderId) throws DataProcessingExeption {
         return orderDao.deleteById(orderId);
     }
 
     @Override
-    public boolean delete(Order order) {
+    public boolean delete(Order order) throws DataProcessingExeption {
         return orderDao.delete(order);
     }
 
     @Override
-    public List<Order> getAll() {
+    public List<Order> getAll() throws DataProcessingExeption {
         return orderDao.getAll();
     }
 }
