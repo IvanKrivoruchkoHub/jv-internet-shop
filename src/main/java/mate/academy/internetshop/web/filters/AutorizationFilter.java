@@ -11,14 +11,18 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exceptions.DataProcessingExeption;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class AutorizationFilter implements Filter {
     @Inject
     private static UserService userService;
+
+    private static Logger logger = Logger.getLogger(AuthenticationFilter.class);
 
     private HashMap<String, Role.RoleName> protectedUrls = new HashMap<>();
 
@@ -47,13 +51,18 @@ public class AutorizationFilter implements Filter {
             return;
         }
         Long userId = (Long) req.getSession().getAttribute("userId");
-        User user = userService.get(userId);
-        if (verifyRole(user, protectedUrls.get(servletPath))) {
-            chain.doFilter(request, response);
-        } else {
-            processDenied(req, resp);
+        try {
+            User user = userService.get(userId);
+            if (verifyRole(user, protectedUrls.get(servletPath))) {
+                chain.doFilter(request, response);
+            } else {
+                processDenied(req, resp);
+            }
+        } catch (DataProcessingExeption dataProcessingExeption) {
+            logger.error(dataProcessingExeption);
+            req.setAttribute("errorMsg", dataProcessingExeption.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
-
     }
 
     private void processDenied(HttpServletRequest req, HttpServletResponse resp)

@@ -11,21 +11,20 @@ import java.util.Locale;
 import java.util.Optional;
 
 import mate.academy.internetshop.dao.ItemDao;
+import mate.academy.internetshop.exceptions.DataProcessingExeption;
 import mate.academy.internetshop.lib.anotations.Dao;
 import mate.academy.internetshop.model.Item;
-import org.apache.log4j.Logger;
 
 @Dao
 public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
-    private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
-    public static String DB_NAME = "internetShop_db";
+    private static final String DB_NAME = "internetShop_db";
 
     public ItemDaoJdbcImpl(Connection connection) {
         super(connection);
     }
 
     @Override
-    public Item create(Item entity) {
+    public Item create(Item entity) throws DataProcessingExeption {
         String query = String.format(Locale.ROOT,
                 "insert into %s.items (name, price) values (?, ?)", DB_NAME);
         try (PreparedStatement preparedStatement
@@ -39,13 +38,13 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataProcessingExeption("Can't create item", e);
         }
         return entity;
     }
 
     @Override
-    public Optional<Item> get(Long entityId) {
+    public Optional<Item> get(Long entityId) throws DataProcessingExeption {
         String query = String.format("select * from %s.items where item_id=?",  DB_NAME);
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, entityId);
@@ -55,13 +54,14 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
                 return Optional.of(item);
             }
         } catch (SQLException e) {
-            logger.warn("Can't get item by id = " + entityId, e);
+            throw new DataProcessingExeption("Can't get item  with id = "
+                    + entityId, e);
         }
         return Optional.empty();
     }
 
     @Override
-    public Item update(Item entity) {
+    public Item update(Item entity) throws DataProcessingExeption {
         String query = String.format(Locale.ROOT,
                 "UPDATE %s.items SET name=?, price=? WHERE item_id=?",
                 DB_NAME);
@@ -72,13 +72,14 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
             preparedStatement.setLong(3, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataProcessingExeption("Can't update item with id = "
+                    + entity.getId(), e);
         }
         return entity;
     }
 
     @Override
-    public boolean deleteById(Long entityId) {
+    public boolean deleteById(Long entityId) throws DataProcessingExeption {
         String query = String.format("delete from %s.items\n"
                 + "where item_id = ?", DB_NAME);
         try (PreparedStatement preparedStatement
@@ -87,17 +88,18 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataProcessingExeption("Can't delete item with id = "
+                    + entityId, e);
         }
     }
 
     @Override
-    public boolean delete(Item entity) {
+    public boolean delete(Item entity) throws DataProcessingExeption {
         return deleteById(entity.getId());
     }
 
     @Override
-    public List<Item> getAll() {
+    public List<Item> getAll() throws DataProcessingExeption {
         List<Item> itemList = new ArrayList<>();
         String query = String.format("select * from %s.items",  DB_NAME);
         try (Statement statement = connection.createStatement()) {
@@ -107,7 +109,7 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
                 itemList.add(item);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataProcessingExeption("Can't get all items", e);
         }
         return itemList;
     }

@@ -7,11 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mate.academy.internetshop.exceptions.DataProcessingExeption;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class RegistrationController extends HttpServlet {
     @Inject
@@ -19,6 +21,8 @@ public class RegistrationController extends HttpServlet {
 
     @Inject
     private static BucketService bucketService;
+
+    private static Logger logger = Logger.getLogger(RegistrationController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -35,11 +39,15 @@ public class RegistrationController extends HttpServlet {
         newUser.setSurname(req.getParameter("surname"));
         newUser.setPassword(req.getParameter("password"));
         newUser.addRole(Role.of("USER"));
-        User user = userService.create(newUser);
-
-        HttpSession session = req.getSession(true);
-        session.setAttribute("userId", user.getId());
-
+        try {
+            User user = userService.create(newUser);
+            HttpSession session = req.getSession(true);
+            session.setAttribute("userId", user.getId());
+        } catch (DataProcessingExeption dataProcessingExeption) {
+            logger.error(dataProcessingExeption);
+            req.setAttribute("errorMsg", dataProcessingExeption.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
+        }
         resp.sendRedirect(req.getContextPath() + "/menu");
     }
 }

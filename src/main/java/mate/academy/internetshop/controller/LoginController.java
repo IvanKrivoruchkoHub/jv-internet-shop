@@ -8,13 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import mate.academy.internetshop.exceptions.AuthenticationException;
+import mate.academy.internetshop.exceptions.DataProcessingExeption;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class LoginController extends HttpServlet {
     @Inject
     private static UserService userService;
+
+    private static Logger logger = Logger.getLogger(LoginController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -35,6 +39,10 @@ public class LoginController extends HttpServlet {
         } catch (AuthenticationException e) {
             req.setAttribute("errorMsg", "Incorrect login or password");
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+        } catch (DataProcessingExeption dataProcessingExeption) {
+            logger.error(dataProcessingExeption);
+            req.setAttribute("errorMsg", dataProcessingExeption.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
     }
 }
