@@ -8,7 +8,6 @@ public class User {
     private String name;
     private String surname;
     private String login;
-    private String token;
     private String password;
     private Set<Role> roles = new HashSet<>();
 
@@ -50,14 +49,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public Set<Role> getRoles() {

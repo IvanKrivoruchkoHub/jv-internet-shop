@@ -27,13 +27,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getUserOrders(User user) {
-        List<Order> resultList = new ArrayList<>();
-        for (Order tempOrder: getAll()) {
-            if (tempOrder.getUserId().equals(user.getId())) {
-                resultList.add(tempOrder);
-            }
-        }
-        return resultList;
+        return orderDao.getUserOrders(user);
     }
 
     @Override

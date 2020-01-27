@@ -2,6 +2,8 @@ package mate.academy.internetshop.service.impl;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.lib.anotations.Inject;
@@ -20,22 +22,20 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public void addItem(Bucket bucket, Item item) {
-        Bucket tempBucket = bucketDao.get(bucket.getBucketId())
-                .orElseThrow(NoSuchElementException::new);
-        tempBucket.getItems().add(item);
+        bucket.getItems().add(item);
+        bucketDao.update(bucket);
     }
 
     @Override
     public void deleteItem(Bucket bucket, Item item) {
-        Bucket tempBucket = bucketDao.get(bucket.getBucketId())
-                .orElseThrow(NoSuchElementException::new);
-        tempBucket.getItems().remove(item);
-        bucketDao.update(tempBucket);
+        List<Item> items = bucket.getItems();
+        items.remove(item);
+        bucketDao.update(bucket);
     }
 
     @Override
     public void clear(Bucket bucket) {
-        bucket.getItems().clear();
+        bucketDao.clear(bucket);
     }
 
     @Override
@@ -45,9 +45,13 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public Bucket getByUserId(Long userId) {
-        return bucketDao.getByUserId(userId)
-                .orElseThrow(() -> new NoSuchElementException("Can't find bucket with user id "
-                                                + userId));
+        Optional<Bucket> optionalBucket = bucketDao.getByUserId(userId);
+        if (optionalBucket.isPresent()) {
+            return optionalBucket.get();
+        }
+        Bucket bucket = new Bucket();
+        bucket.setUserId(userId);
+        return bucketDao.create(bucket);
     }
 
     @Override

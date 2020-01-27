@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.db.Storage;
-import mate.academy.internetshop.lib.IdGenerator;
 import mate.academy.internetshop.lib.anotations.Dao;
 import mate.academy.internetshop.model.Bucket;
 
@@ -14,7 +13,6 @@ public class BucketDaoImpl implements BucketDao {
 
     @Override
     public Bucket create(Bucket bucket) {
-        bucket.setBucketId(IdGenerator.getBucketId());
         Storage.buckets.add(bucket);
         return bucket;
     }
@@ -58,5 +56,10 @@ public class BucketDaoImpl implements BucketDao {
         return Storage.buckets.stream()
                 .filter(b -> b.getUserId().equals(userId))
                 .findFirst();
+    }
+
+    @Override
+    public void clear(Bucket bucket) {
+        bucket.getItems().clear();
     }
 }

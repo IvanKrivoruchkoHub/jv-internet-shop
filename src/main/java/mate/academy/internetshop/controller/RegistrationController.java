@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import mate.academy.internetshop.lib.anotations.Inject;
-import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
@@ -41,9 +40,6 @@ public class RegistrationController extends HttpServlet {
         HttpSession session = req.getSession(true);
         session.setAttribute("userId", user.getId());
 
-        Bucket bucket = new Bucket();
-        bucket.setUserId(user.getId());
-        bucketService.create(bucket);
         resp.sendRedirect(req.getContextPath() + "/menu");
     }
 }

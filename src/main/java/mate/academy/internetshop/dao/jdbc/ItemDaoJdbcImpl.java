@@ -1,6 +1,7 @@
 package mate.academy.internetshop.dao.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,11 +27,13 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
     @Override
     public Item create(Item entity) {
         String query = String.format(Locale.ROOT,
-                "insert into %s.items (name, price) values ('%s', %f)",
-                DB_NAME, entity.getName(), entity.getPrice());
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                "insert into %s.items (name, price) values (?, ?)", DB_NAME);
+        try (PreparedStatement preparedStatement
+                    = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setDouble(2, entity.getPrice());
+            preparedStatement.executeUpdate();
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     entity.setId(generatedKeys.getLong(1));
                 }
@@ -43,9 +46,10 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
 
     @Override
     public Optional<Item> get(Long entityId) {
-        String query = String.format("select * from %s.items where item_id=%d",  DB_NAME, entityId);
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(query);
+        String query = String.format("select * from %s.items where item_id=?",  DB_NAME);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, entityId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 Item item = getItemFromResultSet(resultSet);
                 return Optional.of(item);
@@ -59,10 +63,14 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
     @Override
     public Item update(Item entity) {
         String query = String.format(Locale.ROOT,
-                "UPDATE %s.items SET name = '%s', price = %f WHERE item_id = %d",
-                DB_NAME, entity.getName(), entity.getPrice(), entity.getId());
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(query);
+                "UPDATE %s.items SET name=?, price=? WHERE item_id=?",
+                DB_NAME);
+        try (PreparedStatement preparedStatement
+                     = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setDouble(2, entity.getPrice());
+            preparedStatement.setLong(3, entity.getId());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -72,9 +80,11 @@ public class ItemDaoJdbcImpl extends AbcstractDao<Item> implements ItemDao {
     @Override
     public boolean deleteById(Long entityId) {
         String query = String.format("delete from %s.items\n"
-                + "where item_id = %d", DB_NAME, entityId);
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(query);
+                + "where item_id = ?", DB_NAME);
+        try (PreparedStatement preparedStatement
+                     = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, entityId);
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
