@@ -35,7 +35,7 @@ CREATE TABLE `internetShop_db`.`users` (
                                            `name` VARCHAR(45) NULL,
                                            `surname` VARCHAR(45) NULL,
                                            `login` VARCHAR(45) NOT NULL,
-                                           `password` VARCHAR(45) NOT NULL,
+                                           `password` VARCHAR(255) NOT NULL,
                                            `token` VARCHAR(45) NULL,
                                            PRIMARY KEY (`user_id`),
                                            UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
@@ -70,6 +70,12 @@ INSERT INTO `internetShop_db`.`orders_items` (`order_id`, `item_id`) VALUES ('1'
 INSERT INTO `internetShop_db`.`orders_items` (`order_id`, `item_id`) VALUES ('2', '29');
 INSERT INTO `internetShop_db`.`orders_items` (`order_id`, `item_id`) VALUES ('3', '27');
 INSERT INTO `internetShop_db`.`orders_items` (`order_id`, `item_id`) VALUES ('3', '30');
+
+ALTER TABLE `internetShop_db`.`users`
+    ADD COLUMN `salt` VARCHAR(255) NOT NULL AFTER `password`;
+
+ALTER TABLE `internetShop_db`.`users`
+    CHANGE COLUMN `salt` `salt` VARBINARY(255) NULL DEFAULT NULL ;
 
 
 
