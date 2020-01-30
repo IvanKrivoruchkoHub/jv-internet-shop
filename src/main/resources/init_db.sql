@@ -77,6 +77,9 @@ ALTER TABLE `internetShop_db`.`users`
 ALTER TABLE `internetShop_db`.`users`
     CHANGE COLUMN `salt` `salt` VARBINARY(255) NULL DEFAULT NULL ;
 
+UPDATE `internetShop_db`.`users` SET `name` = 'User', `surname` = 'User', `login` = 'User1' WHERE (`user_id` = '26');
+UPDATE `internetShop_db`.`users` SET `name` = 'Admin', `surname` = 'Admin' WHERE (`user_id` = '27');
+
 
 
 

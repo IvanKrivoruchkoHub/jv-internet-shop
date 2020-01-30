@@ -159,6 +159,7 @@
         <filter-name>authentication-filter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
     </filter-mapping>
+
     <filter>
         <filter-name>autorization-filter</filter-name>
         <filter-class>mate.academy.internetshop.web.filters.AutorizationFilter</filter-class>
@@ -167,5 +168,4 @@
         <filter-name>autorization-filter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
     </filter-mapping>
-
 </web-app>
