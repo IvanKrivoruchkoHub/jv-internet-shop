@@ -27,7 +27,7 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
     @Override
     public Optional<User> findByLogin(String login) throws DataProcessingExeption {
         String query = String.format("select users.user_id, users.name, "
-                + "users.surname, users.login, users.password,\n"
+                + "users.surname, users.login, users.password, users.salt,\n"
                 + "roles.role_name, roles.role_id\n"
                 + "from %1$s.users\n"
                 + "join %1$s.users_roles using(user_id)\n"
@@ -55,6 +55,7 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
                     user.setSurname(resultSet.getString("surname"));
                     user.setLogin(resultSet.getString("login"));
                     user.setPassword(resultSet.getString("password"));
+                    user.setSalt(resultSet.getBytes("salt"));
                 }
                 Role role = Role.of(resultSet.getString("role_name"));
                 role.setId(resultSet.getLong("role_id"));
@@ -69,7 +70,7 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
     @Override
     public User create(User entity) throws DataProcessingExeption {
         String insertUserQuery = String.format("insert into %s.users "
-                + "(name, surname, login, password) values (?, ?, ?, ?)", DB_NAME);
+                + "(name, surname, login, password, salt) values (?, ?, ?, ?, ?)", DB_NAME);
         try (PreparedStatement preparedStatement
                      = connection.prepareStatement(insertUserQuery,
                 Statement.RETURN_GENERATED_KEYS)) {
@@ -77,6 +78,7 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
             preparedStatement.setString(2, entity.getSurname());
             preparedStatement.setString(3, entity.getLogin());
             preparedStatement.setString(4, entity.getPassword());
+            preparedStatement.setBytes(5, entity.getSalt());
             preparedStatement.executeUpdate();
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -125,7 +127,7 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
     @Override
     public Optional<User> get(Long entityId) throws DataProcessingExeption {
         String query = String.format("select users.user_id, users.name, "
-                + "users.surname, users.login, users.password,\n"
+                + "users.surname, users.login, users.password, users.salt,\n"
                 + "roles.role_name, roles.role_id\n"
                 + "from %1$s.users\n"
                 + "join %1$s.users_roles using(user_id)\n"
@@ -143,14 +145,15 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
     @Override
     public User update(User entity) throws DataProcessingExeption {
         String updateUserQuery = String.format("update %s.users set name = ?, "
-                + "surname = ?, login = ?, password = ?\n"
+                + "surname = ?, login = ?, password = ?, salt = ?\n"
                 + "where user_id = ?", DB_NAME);
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateUserQuery)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getSurname());
             preparedStatement.setString(3, entity.getLogin());
             preparedStatement.setString(4, entity.getPassword());
-            preparedStatement.setLong(5, entity.getId());
+            preparedStatement.setBytes(5, entity.getSalt());
+            preparedStatement.setLong(6, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -193,7 +196,7 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
     public List<User> getAll() throws DataProcessingExeption {
         String getAllUsersQuery = String.format(Locale.ROOT,
                 "select users.user_id, users.name, users.surname, users.login, users.password, "
-                        + "roles.role_name, roles.role_id\n"
+                        + "users.salt, roles.role_name, roles.role_id\n"
                         + "from %1$s.users\n"
                         + "join %1$s.users_roles using(user_id)\n"
                         + "join roles using(role_id)\n"
@@ -225,6 +228,7 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
                     user.setSurname(resultSet.getString("surname"));
                     user.setLogin(resultSet.getString("login"));
                     user.setPassword(resultSet.getString("password"));
+                    user.setSalt(resultSet.getBytes("salt"));
                 }
                 Role role = Role.of(resultSet.getString("role_name"));
                 role.setId(resultSet.getLong("role_id"));
