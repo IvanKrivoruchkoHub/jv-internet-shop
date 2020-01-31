@@ -21,7 +21,7 @@ public class AddItemToBucketController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 
-    private static Logger logger = Logger.getLogger(AddItemToBucketController.class);
+    private Logger logger = Logger.getLogger(AddItemToBucketController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -31,12 +31,11 @@ public class AddItemToBucketController extends HttpServlet {
             Long userId = (Long) req.getSession(true).getAttribute("userId");
             Bucket bucket = bucketService.getByUserId(userId);
             bucketService.addItem(bucket, item);
-            req.setAttribute("items", itemService.getAll());
         } catch (DataProcessingExeption dataProcessingExeption) {
             logger.error(dataProcessingExeption);
             req.setAttribute("errorMsg", dataProcessingExeption.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
         }
-        req.getRequestDispatcher("/WEB-INF/views/allItems.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/servlet/allItems");
     }
 }

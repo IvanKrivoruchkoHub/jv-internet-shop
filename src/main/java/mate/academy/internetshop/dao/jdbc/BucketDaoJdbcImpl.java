@@ -30,8 +30,8 @@ public class BucketDaoJdbcImpl extends AbcstractDao<Bucket> implements BucketDao
                 "select buckets.bucket_id, buckets.user_id, "
                         + "items.item_id, items.name, items.price\n"
                         + "from %1$s.buckets\n"
-                        + "join %1$s.buckets_items using(bucket_id)\n"
-                        + "join %1$s.items using(item_id)\n"
+                        + "left join %1$s.buckets_items using(bucket_id)\n"
+                        + "left join %1$s.items using(item_id)\n"
                         + "where user_id = ?", DB_NAME);
         return getBucket(userId, query);
     }
@@ -96,8 +96,8 @@ public class BucketDaoJdbcImpl extends AbcstractDao<Bucket> implements BucketDao
                 "select buckets.bucket_id, buckets.user_id, "
                         + "items.item_id, items.name, items.price\n"
                         + "from %1$s.buckets\n"
-                        + "join %1$s.buckets_items using(bucket_id)\n"
-                        + "join %1$s.items using(item_id)\n"
+                        + "left join %1$s.buckets_items using(bucket_id)\n"
+                        + "left join %1$s.items using(item_id)\n"
                         + "where bucket_id = ?", DB_NAME);
         return getBucket(entityId, query);
     }
@@ -114,11 +114,13 @@ public class BucketDaoJdbcImpl extends AbcstractDao<Bucket> implements BucketDao
                     bucket.setUserId(resultSet.getLong("user_id"));
                     bucket.setBucketId(resultSet.getLong("bucket_id"));
                 }
-                Item item = new Item();
-                item.setId(resultSet.getLong("item_id"));
-                item.setName(resultSet.getString("name"));
-                item.setPrice(resultSet.getDouble("price"));
-                bucket.getItems().add(item);
+                if (resultSet.getString("name") != null) {
+                    Item item = new Item();
+                    item.setId(resultSet.getLong("item_id"));
+                    item.setName(resultSet.getString("name"));
+                    item.setPrice(resultSet.getDouble("price"));
+                    bucket.getItems().add(item);
+                }
             }
             return Optional.ofNullable(bucket);
         } catch (SQLException e) {
@@ -139,16 +141,7 @@ public class BucketDaoJdbcImpl extends AbcstractDao<Bucket> implements BucketDao
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        String deleteFromBucketsItemsTable
-                = String.format("delete from %s.buckets_items where bucket_id = ?", DB_NAME);
-        try (PreparedStatement preparedStatement
-                     = connection.prepareStatement(deleteFromBucketsItemsTable)) {
-            preparedStatement.setLong(1, entity.getBucketId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DataProcessingExeption("Cant't update bucket wit id = "
-                    + entity.getBucketId(), e);
-        }
+        clear(entity);
         addItemsIntoBucketsItemsTable(entity);
         return entity;
     }

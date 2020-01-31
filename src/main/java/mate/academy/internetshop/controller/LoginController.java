@@ -18,7 +18,7 @@ public class LoginController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    private static Logger logger = Logger.getLogger(LoginController.class);
+    private Logger logger = Logger.getLogger(LoginController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

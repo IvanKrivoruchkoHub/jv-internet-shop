@@ -150,6 +150,15 @@
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>injectDefaultUsers</servlet-name>
+        <servlet-class>mate.academy.internetshop.controller.InjectDefaultUsersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>injectDefaultUsers</servlet-name>
+        <url-pattern>/injectDefaultUsers</url-pattern>
+    </servlet-mapping>
     
     <filter>
         <filter-name>authentication-filter</filter-name>
@@ -159,6 +168,7 @@
         <filter-name>authentication-filter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
     </filter-mapping>
+
     <filter>
         <filter-name>autorization-filter</filter-name>
         <filter-class>mate.academy.internetshop.web.filters.AutorizationFilter</filter-class>
@@ -167,5 +177,4 @@
         <filter-name>autorization-filter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
     </filter-mapping>
-
 </web-app>

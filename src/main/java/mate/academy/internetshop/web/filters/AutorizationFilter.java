@@ -22,7 +22,7 @@ public class AutorizationFilter implements Filter {
     @Inject
     private static UserService userService;
 
-    private static Logger logger = Logger.getLogger(AuthenticationFilter.class);
+    private Logger logger = Logger.getLogger(AuthenticationFilter.class);
 
     private HashMap<String, Role.RoleName> protectedUrls = new HashMap<>();
 

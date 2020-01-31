@@ -20,7 +20,7 @@ public class GetAllUserOrdersController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    private static Logger logger = Logger.getLogger(GetAllUserOrdersController.class);
+    private Logger logger = Logger.getLogger(GetAllUserOrdersController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

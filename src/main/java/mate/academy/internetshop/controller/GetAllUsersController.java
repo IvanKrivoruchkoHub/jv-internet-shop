@@ -17,7 +17,7 @@ public class GetAllUsersController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    private static Logger logger = Logger.getLogger(GetAllUsersController.class);
+    private Logger logger = Logger.getLogger(GetAllUsersController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
