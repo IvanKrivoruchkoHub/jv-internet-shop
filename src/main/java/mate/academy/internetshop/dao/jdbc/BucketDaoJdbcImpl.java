@@ -199,11 +199,12 @@ public class BucketDaoJdbcImpl extends AbcstractDao<Bucket> implements BucketDao
                 item.setPrice(resultSet.getDouble("price"));
                 bucket.getItems().add(item);
             }
-            bucketListResult.add(bucket);
+            if (bucket != null) {
+                bucketListResult.add(bucket);
+            }
             return bucketListResult;
         } catch (SQLException e) {
             throw new DataProcessingExeption("Can't get All buckets", e);
         }
     }
-
 }

@@ -21,10 +21,8 @@ public class DeleteOrderController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            if (!req.getParameter("order_id").equals("")) {
-                Long userId = Long.valueOf(req.getParameter("order_id"));
-                orderService.deleteById(userId);
-            }
+            Long userId = Long.valueOf(req.getParameter("order_id"));
+            orderService.deleteById(userId);
         } catch (DataProcessingExeption dataProcessingExeption) {
             logger.error(dataProcessingExeption);
             req.setAttribute("errorMsg", dataProcessingExeption.getMessage());

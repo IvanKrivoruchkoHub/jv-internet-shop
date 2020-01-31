@@ -200,7 +200,9 @@ public class OrderDaoJdbcImpl extends AbcstractDao<Order> implements OrderDao {
             item.setPrice(resultSet.getDouble("price"));
             order.getItems().add(item);
         }
-        orderListResult.add(order);
+        if (order != null) {
+            orderListResult.add(order);
+        }
         return orderListResult;
     }
 }

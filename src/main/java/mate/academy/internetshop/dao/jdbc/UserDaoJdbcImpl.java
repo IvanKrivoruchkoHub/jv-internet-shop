@@ -212,8 +212,8 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
 
     private List<User> getUsers(ResultSet resultSet) throws DataProcessingExeption {
         List<User> userListResult = new ArrayList<>();
-        User user = null;
         try {
+            User user = null;
             while (resultSet.next()) {
                 if (user == null) {
                     user = new User();
@@ -234,10 +234,12 @@ public class UserDaoJdbcImpl extends AbcstractDao<User> implements UserDao {
                 role.setId(resultSet.getLong("role_id"));
                 user.getRoles().add(role);
             }
-            userListResult.add(user);
-            return userListResult;
+            if (user != null) {
+                userListResult.add(user);
+            }
         } catch (SQLException e) {
             throw new DataProcessingExeption("Can't get users", e);
         }
+        return userListResult;
     }
 }
