@@ -150,6 +150,15 @@
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>injectDefaultUsers</servlet-name>
+        <servlet-class>mate.academy.internetshop.controller.InjectDefaultUsersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>injectDefaultUsers</servlet-name>
+        <url-pattern>/injectDefaultUsers</url-pattern>
+    </servlet-mapping>
     
     <filter>
         <filter-name>authentication-filter</filter-name>

@@ -1,11 +1,11 @@
 package mate.academy.internetshop.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import mate.academy.internetshop.dao.BucketDao;
-import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.exceptions.DataProcessingExeption;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.lib.anotations.Service;
@@ -17,9 +17,6 @@ import mate.academy.internetshop.service.BucketService;
 public class BucketServiceImpl implements BucketService {
     @Inject
     private static BucketDao bucketDao;
-
-    @Inject
-    private static ItemDao itemDao;
 
     @Override
     public void addItem(Bucket bucket, Item item) throws DataProcessingExeption {
@@ -37,11 +34,6 @@ public class BucketServiceImpl implements BucketService {
     @Override
     public void clear(Bucket bucket) throws DataProcessingExeption {
         bucketDao.clear(bucket);
-    }
-
-    @Override
-    public List<Item> getAllItemsFromBucket(Bucket bucket) {
-        return bucket.getItems();
     }
 
     @Override

@@ -16,7 +16,7 @@ public class AddItemController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 
-    private static Logger logger = Logger.getLogger(AddItemController.class);
+    private Logger logger = Logger.getLogger(AddItemController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

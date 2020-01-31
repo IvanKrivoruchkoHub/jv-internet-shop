@@ -15,7 +15,7 @@ public class DeleteOrderController extends HttpServlet {
     @Inject
     private static OrderService orderService;
 
-    private static Logger logger = Logger.getLogger(DeleteOrderController.class);
+    private Logger logger = Logger.getLogger(DeleteOrderController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

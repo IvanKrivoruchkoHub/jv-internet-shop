@@ -21,7 +21,7 @@ public class DeleteItemFromBucketController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 
-    private static Logger logger = Logger.getLogger(DeleteItemFromBucketController.class);
+    private Logger logger = Logger.getLogger(DeleteItemFromBucketController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

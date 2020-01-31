@@ -21,10 +21,10 @@ public class AuthenticationFilter implements Filter {
     @Inject
     private static UserService userService;
 
-    private static Logger logger = Logger.getLogger(AuthenticationFilter.class);
+    private Logger logger = Logger.getLogger(AuthenticationFilter.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig){
 
     }
 

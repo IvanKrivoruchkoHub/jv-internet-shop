@@ -44,14 +44,6 @@ Available functions for users with an ADMIN role only:
 <hr>
 
 # <a name="developer-start"></a>For developer
-In this project are two implementations of database:
-* The first BD stores the data in java.util.List.
-* The second BD stores the data in MySQL database.  
-
-You may change DB implementation in /jv-internet-shop/src/main/java/mate/academy/internetshop/factory/DaoAndServiceFactory.
-By default it uses the MySQL implementation.
-<hr>
-
 Open the project in your IDE.
 
 Add it as maven project.
@@ -70,9 +62,12 @@ Change a path in /jv-internet-shop/src/main/resources/log4j.properties. It has t
 
 Run the project.
 
+If you first time launch this project: 
+ * Run InjectDefaultUsersController by URL = .../internet_shop_war_exploded/injectDefaultUsers to create default users.
+
 By default there are one user with an USER role (login = "User1", password = "1") 
 and one with an ADMIN role (login = "Admin1", password = "1"). 
 <hr>
 
 # <a name="authors"></a>Authors
-* https://github.com/IvanKrivoruchkoHub
+[Ivan Krivoruchko](https://github.com/IvanKrivoruchkoHub)

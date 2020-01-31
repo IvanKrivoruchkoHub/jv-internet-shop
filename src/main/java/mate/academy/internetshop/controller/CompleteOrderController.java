@@ -26,7 +26,7 @@ public class CompleteOrderController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    private static Logger logger = Logger.getLogger(CompleteOrderController.class);
+    private Logger logger = Logger.getLogger(CompleteOrderController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -16,7 +16,7 @@ public class BucketController extends HttpServlet {
     @Inject
     private static BucketService bucketService;
 
-    private static Logger logger = Logger.getLogger(BucketController.class);
+    private Logger logger = Logger.getLogger(BucketController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

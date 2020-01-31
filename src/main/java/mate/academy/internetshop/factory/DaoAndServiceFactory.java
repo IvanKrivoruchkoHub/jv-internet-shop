@@ -34,7 +34,7 @@ public class DaoAndServiceFactory {
     private static UserService userServiceInstance;
 
     private static Connection connection;
-    private static Logger logger = Logger.getLogger(DaoAndServiceFactory.class);
+    private static final Logger LOGGER = Logger.getLogger(DaoAndServiceFactory.class);
 
     static {
         try {
@@ -42,7 +42,7 @@ public class DaoAndServiceFactory {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/internetShop_db?"
                     + "user=ivan&password=1234&serverTimezone=UTC");
         } catch (ClassNotFoundException | SQLException e) {
-            logger.warn("Can't establish connection to our DB", e);
+            LOGGER.warn("Can't establish connection to our DB", e);
         }
     }
 

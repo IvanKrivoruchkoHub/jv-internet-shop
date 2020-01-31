@@ -15,7 +15,7 @@ public class DeleteItemController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 
-    private static Logger logger = Logger.getLogger(DeleteItemController.class);
+    private Logger logger = Logger.getLogger(DeleteItemController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -21,7 +21,7 @@ public class AddItemToBucketController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 
-    private static Logger logger = Logger.getLogger(AddItemToBucketController.class);
+    private Logger logger = Logger.getLogger(AddItemToBucketController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

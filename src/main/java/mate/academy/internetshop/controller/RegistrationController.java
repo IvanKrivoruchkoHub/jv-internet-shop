@@ -11,7 +11,6 @@ import mate.academy.internetshop.exceptions.DataProcessingExeption;
 import mate.academy.internetshop.lib.anotations.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
-import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.UserService;
 import org.apache.log4j.Logger;
 
@@ -19,10 +18,7 @@ public class RegistrationController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    @Inject
-    private static BucketService bucketService;
-
-    private static Logger logger = Logger.getLogger(RegistrationController.class);
+    private Logger logger = Logger.getLogger(RegistrationController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
