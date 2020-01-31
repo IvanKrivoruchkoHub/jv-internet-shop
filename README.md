@@ -47,6 +47,9 @@ Available functions for users with an ADMIN role only:
 In this project are two implementations of database:
 * The first BD stores the data in java.util.List.
 * The second BD stores the data in MySQL database.  
+
+You may change DB implementation in /jv-internet-shop/src/main/java/mate/academy/internetshop/factory/DaoAndServiceFactory.
+By default it uses the MySQL implementation.
 <hr>
 
 Open the project in your IDE.
@@ -59,12 +62,9 @@ Configure Tomcat:
 
 Add sdk 11.0.3 in project struсture.
 
-Select DB implementation in /jv-internet-shop/src/main/java/mate/academy/internetshop/factory/DaoAndServiceFactory.
-By default it uses the MySQL implementation.
+Use file /jv-internet-shop/src/main/resources/init_db.sql to create schema and all the tables required by this app in MySQL database.
 
-If you choose MySQL implementation then:
- * Use file /jv-internet-shop/src/main/resources/init_db.sql to create schema and all the tables required by this app in MySQL database.
- * At /jv-internet-shop/src/main/java/mate/academy/internetshop/factory/DaoAndServiceFactory class use username and password for your DB to create a Connection.
+At /jv-internet-shop/src/main/java/mate/academy/internetshop/factory/DaoAndServiceFactory class use username and password for your DB to create a Connection.
 
 Change a path in /jv-internet-shop/src/main/resources/log4j.properties. It has to reach your logFile.
 
