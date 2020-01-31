@@ -114,11 +114,13 @@ public class BucketDaoJdbcImpl extends AbcstractDao<Bucket> implements BucketDao
                     bucket.setUserId(resultSet.getLong("user_id"));
                     bucket.setBucketId(resultSet.getLong("bucket_id"));
                 }
-                Item item = new Item();
-                item.setId(resultSet.getLong("item_id"));
-                item.setName(resultSet.getString("name"));
-                item.setPrice(resultSet.getDouble("price"));
-                bucket.getItems().add(item);
+                if (resultSet.getString("name") != null) {
+                    Item item = new Item();
+                    item.setId(resultSet.getLong("item_id"));
+                    item.setName(resultSet.getString("name"));
+                    item.setPrice(resultSet.getDouble("price"));
+                    bucket.getItems().add(item);
+                }
             }
             return Optional.ofNullable(bucket);
         } catch (SQLException e) {
